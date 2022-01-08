@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:luigi_pizza/dto/Toppings.dart';
 
-class Pizza {
+class Menu {
   final int id;
   final String category;
   final String name;
@@ -9,14 +8,14 @@ class Pizza {
   final int price;
   final int rank;
 
-  Pizza(this.id, this.category, this.name, this.topping, this.price, this.rank);
+  Menu(this.id, this.category, this.name, this.topping, this.price, this.rank);
 
-  factory Pizza.fromJson(Map<String, dynamic> json) {
+  factory Menu.fromJson(Map<String, dynamic> json) {
     var toppingsFromJson = json['topping'];
 
     List<String> toppings = toppingsFromJson.cast<String>();
 
-    return Pizza(json['id'], json['category'], json['name'], toppings,
+    return Menu(json['id'], json['category'], json['name'], toppings,
         json['price'], json['rank']);
   }
 }

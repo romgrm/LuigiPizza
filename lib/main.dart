@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:luigi_pizza/dto/Pizza.dart';
-import 'package:luigi_pizza/store/menu.dart';
-import 'dart:convert';
+import 'package:luigi_pizza/dto/Menu.dart';
+import 'package:luigi_pizza/dto/Restaurant.dart';
+import 'package:luigi_pizza/store/MenuStore.dart';
+import 'package:luigi_pizza/store/RestaurantStore.dart';
 import 'dart:async';
-
-import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -33,38 +32,23 @@ class MyHomePage extends StatefulWidget {
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
-
-  /* Future<Pizza> fetchMenu() async {
-    final response = await http.get(Uri.parse(
-        "https://private-anon-06cb6fff8f-pizzaapp.apiary-mock.com/restaurants/2/menu?category=Pizza&orderBy=rank"));
-
-    if (response.statusCode == 200) {
-      print(response);
-
-      return Pizza.fromJson(jsonDecode(response.body));
-    } else {
-      return throw Exception('Failed to load menu');
-    }
-  } */
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
-  late Future<Pizza> futurePizza = fetchMenu();
+  late Future<Menu> futureMenu = fetchMenu();
+  late Future<Restaurant> futureRestaurant = fetchRestaurant();
+  // late Future<Pizza> futurePizza = fetchMenu();
 
   @override
   void initState() {
     super.initState();
+    futureRestaurant = fetchRestaurant();
+    futureMenu = fetchMenu();
   }
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
@@ -81,8 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
           title: const Text('Fetch Data Example'),
         ),
         body: Center(
-          child: FutureBuilder<Pizza>(
-            future: futurePizza,
+          child: FutureBuilder<Restaurant>(
+            future: futureRestaurant,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Text(snapshot.data!.name);
