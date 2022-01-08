@@ -36,15 +36,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  late Future<Menu> futureMenu = fetchMenu();
-  late Future<Restaurant> futureRestaurant = fetchRestaurant();
+  // late Future<Menu> futureMenu = fetchMenu();
+  // late Future<Restaurant> futureRestaurant = fetchRestaurant();
+  Future<List<Restaurant>> futureRestaurants = fetchRestaurant();
+  // List<Restaurant> _restaurants = <Restaurant>[];
   // late Future<Pizza> futurePizza = fetchMenu();
 
   @override
   void initState() {
     super.initState();
-    futureRestaurant = fetchRestaurant();
-    futureMenu = fetchMenu();
   }
 
   void _incrementCounter() {
@@ -65,20 +65,28 @@ class _MyHomePageState extends State<MyHomePage> {
           title: const Text('Fetch Data Example'),
         ),
         body: Center(
-          child: FutureBuilder<Restaurant>(
-            future: futureRestaurant,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Text(snapshot.data!.name);
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-
-              // By default, show a loading spinner.
-              return const CircularProgressIndicator();
-            },
-          ),
-        ),
+            child: FutureBuilder<List<Restaurant>>(
+          future: futureRestaurants,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<Restaurant>? restaurants = snapshot.data;
+              return ListView.builder(
+                  itemCount: restaurants!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      height: 75,
+                      color: Colors.white,
+                      child: Center(
+                        child: Text(restaurants[index].street),
+                      ),
+                    );
+                  });
+            } else if (snapshot.hasError) {
+              return Text("error");
+            }
+            return CircularProgressIndicator();
+          },
+        )),
       ),
     );
   }
