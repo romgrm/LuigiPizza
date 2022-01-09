@@ -11,6 +11,7 @@ Future<List<Restaurant>> fetchRestaurant() async {
       "https://private-anon-06cb6fff8f-pizzaapp.apiary-mock.com/restaurants/"));
 
   if (response.statusCode == 200) {
+    
     List jsonResponse = json.decode(response.body);
     print(response.body);
 

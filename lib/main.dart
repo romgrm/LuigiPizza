@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:luigi_pizza/dto/Menu.dart';
 import 'package:luigi_pizza/dto/Restaurant.dart';
+import 'package:luigi_pizza/map/Map.dart';
 import 'package:luigi_pizza/store/MenuStore.dart';
 import 'package:luigi_pizza/store/RestaurantStore.dart';
 import 'dart:async';
@@ -35,59 +37,68 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  // late Future<Menu> futureMenu = fetchMenu();
-  // late Future<Restaurant> futureRestaurant = fetchRestaurant();
-  Future<List<Restaurant>> futureRestaurants = fetchRestaurant();
-  // List<Restaurant> _restaurants = <Restaurant>[];
-  // late Future<Pizza> futurePizza = fetchMenu();
+  late GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(45.521563, -122.677433);
 
   @override
   void initState() {
     super.initState();
   }
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
   }
+
+  Future<List<Restaurant>> futureRestaurants = fetchRestaurant();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Fetch Data Example',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Fetch Data Example'),
+        title: 'Fetch Data Example',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
         ),
-        body: Center(
-            child: FutureBuilder<List<Restaurant>>(
-          future: futureRestaurants,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<Restaurant>? restaurants = snapshot.data;
-              return ListView.builder(
-                  itemCount: restaurants!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      height: 75,
-                      color: Colors.white,
-                      child: Center(
-                        child: Text(restaurants[index].street),
-                      ),
-                    );
-                  });
-            } else if (snapshot.hasError) {
-              return Text("error");
-            }
-            return CircularProgressIndicator();
-          },
-        )),
-      ),
-    );
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Fetch Data Example'),
+          ),
+          body: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FutureBuilder<List<Restaurant>>(
+                future: futureRestaurants,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<Restaurant>? restaurants = snapshot.data;
+                    return ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: restaurants!.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            height: 75,
+                            color: Colors.blue,
+                            child: Center(
+                              child: Text(restaurants[index].street),
+                            ),
+                          );
+                        });
+                  } else if (snapshot.hasError) {
+                    return Text("error");
+                  }
+                  return CircularProgressIndicator();
+                },
+              ),
+              Container(
+                height: 300,
+                width: 300,
+                color: Colors.red,
+                child: const MapBox(),
+              )
+            ],
+          )),
+        ));
   }
 }

@@ -4,6 +4,12 @@
         android:label="luigi_pizza"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+    <meta-data 
+    android:name="com.google.android.geo.API_KEY"
+    android:value="AIzaSyAdjm9VGUqhPZFEz8nmS6xYsRNYBwpjDoM"
+    />
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"

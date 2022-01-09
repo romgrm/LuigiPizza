@@ -12,10 +12,5 @@ class Restaurant {
     return Restaurant(json["id"], json["name"], json["address1"],
         json["address2"], json["latitude"], json["longitude"]);
   }
-
-  factory Restaurant.test(dynamic json) {
-    print(json);
-    return Restaurant(json['id'], json['name'], json["address1"],
-        json["address2"], json["latitude"], json["longitude"]);
-  }
+  
 }
