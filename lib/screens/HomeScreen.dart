@@ -13,11 +13,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Page'),
-      ),
-      body: const Center(
-        child: Text('Hello, oflutter.com'),
+      backgroundColor: const Color(0xff856CD4),
+      body: Center(
+        child: Image.asset('assets/images/chef.png'),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.settings),
