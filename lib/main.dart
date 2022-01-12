@@ -6,6 +6,7 @@ import 'package:luigi_pizza/map/Map.dart';
 import 'package:luigi_pizza/store/MenuStore.dart';
 import 'package:luigi_pizza/store/RestaurantStore.dart';
 import 'dart:async';
+import 'router/Router.dart' as router;
 
 void main() {
   runApp(const MyApp());
@@ -37,68 +38,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late GoogleMapController mapController;
-
-  final LatLng _center = const LatLng(45.521563, -122.677433);
-
   @override
   void initState() {
     super.initState();
   }
 
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
-
-  Future<List<Restaurant>> futureRestaurants = fetchRestaurant();
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Fetch Data Example',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Fetch Data Example'),
-          ),
-          body: Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FutureBuilder<List<Restaurant>>(
-                future: futureRestaurants,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    List<Restaurant>? restaurants = snapshot.data;
-                    return ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: restaurants!.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            height: 75,
-                            color: Colors.blue,
-                            child: Center(
-                              child: Text(restaurants[index].street),
-                            ),
-                          );
-                        });
-                  } else if (snapshot.hasError) {
-                    return Text("error");
-                  }
-                  return CircularProgressIndicator();
-                },
-              ),
-              Container(
-                height: 300,
-                width: 300,
-                color: Colors.red,
-                child: const MapBox(),
-              )
-            ],
-          )),
-        ));
+      title: 'Fetch Data Example',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      onGenerateRoute: router.controller,
+      initialRoute: router.homeScreen,
+    );
   }
 }
