@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:luigi_pizza/screens/HomeScreen.dart';
 import 'package:luigi_pizza/screens/MapScreen.dart';
@@ -10,11 +11,14 @@ const menuScreen = 'menu';
 Route<dynamic> controller(RouteSettings settings) {
   switch (settings.name) {
     case homeScreen:
-      return MaterialPageRoute(builder: (context) => HomeScreen());
+      return CupertinoPageRoute(builder: (context) => HomeScreen());
+    // return MaterialPageRoute(builder: (context) => HomeScreen());
     case mapScreen:
-      return MaterialPageRoute(builder: (context) => MapScreen());
+      return CupertinoPageRoute(builder: (context) => MapScreen());
+    // return MaterialPageRoute(builder: (context) => MapScreen());
     case menuScreen:
-      return MaterialPageRoute(builder: (contenxt) => MenuScreen());
+      return MaterialPageRoute(
+          builder: (context) => MenuScreen(restaurantId: settings.arguments));
     default:
       throw ('This route name does not exist');
   }

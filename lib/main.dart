@@ -1,11 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:luigi_pizza/dto/Menu.dart';
-import 'package:luigi_pizza/dto/Restaurant.dart';
-import 'package:luigi_pizza/map/Map.dart';
-import 'package:luigi_pizza/store/MenuStore.dart';
-import 'package:luigi_pizza/store/RestaurantStore.dart';
-import 'dart:async';
 import 'router/Router.dart' as router;
 
 void main() {
