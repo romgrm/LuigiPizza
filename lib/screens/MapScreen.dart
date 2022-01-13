@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:luigi_pizza/dto/Restaurant.dart';
 import 'package:luigi_pizza/store/RestaurantStore.dart';
 import 'package:luigi_pizza/router/Router.dart' as router;
 
@@ -50,44 +49,5 @@ class _MapScreenState extends State<MapScreen> {
         markers: _markers.values.toSet(),
       ),
     );
-    return MaterialApp(
-        home: Scaffold(
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          FutureBuilder<List<Restaurant>>(
-            // future: futureRestaurants,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                List<Restaurant>? restaurants = snapshot.data;
-                return ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: restaurants!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        height: 75,
-                        color: Colors.blue,
-                        child: Center(
-                          child: Text(restaurants[index].street),
-                        ),
-                      );
-                    });
-              } else if (snapshot.hasError) {
-                return Text("error");
-              }
-              return const CircularProgressIndicator();
-            },
-          ),
-          Container(
-            height: 300,
-            width: 300,
-            color: Colors.red,
-            // child: const MapBox(),
-          )
-        ],
-      )),
-    ));
   }
 }

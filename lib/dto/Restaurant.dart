@@ -12,5 +12,4 @@ class Restaurant {
     return Restaurant(json["id"], json["name"], json["address1"],
         json["address2"], json["latitude"], json["longitude"]);
   }
-  
 }

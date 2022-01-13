@@ -11,18 +11,12 @@ Future<List<Restaurant>> fetchRestaurant() async {
       "https://private-anon-06cb6fff8f-pizzaapp.apiary-mock.com/restaurants/"));
 
   if (response.statusCode == 200) {
-    
     List jsonResponse = json.decode(response.body);
     print(response.body);
 
     return jsonResponse
         .map((restaurants) => Restaurant.fromJson(restaurants))
         .toList();
-
-    // return Restaurant.test(jsonResponse);
-    // return Restaurant.fromJson(jsonResponse[0]);
-
-    /* return Pizza.fromJson(jsonDecode(response.body)); */
   } else {
     return throw Exception('Failed to load menu');
   }

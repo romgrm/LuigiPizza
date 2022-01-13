@@ -14,19 +14,23 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  Menu? restaurantMenu;
+  Future<List<Menu>>? restaurantMenu;
 
   @override
   void initState() {
     super.initState();
-    _onMenuCreated();
+    // we are not really calling setState() within initState() because _onMenuCreated is asynchronous so initState() is already called
+    // TODO: find a way to call setState() and set restaurantMenu on another place
+    setState(() {
+      restaurantMenu = _onMenuCreated();
+    });
   }
 
-  Future<Menu> _onMenuCreated() async {
-    final futureMenu = await fetchMenu(widget.restaurantId);
-    setState(() {
-      restaurantMenu = futureMenu;
-    });
+  Future<List<Menu>> _onMenuCreated() async {
+    List<Menu> futureMenu = await fetchMenu(widget.restaurantId);
+    // setState(() {
+    //   restaurantMenu = futureMenu;
+    // });
     return futureMenu;
   }
 
@@ -34,8 +38,35 @@ class _MenuScreenState extends State<MenuScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(restaurantMenu?.name ?? ""),
-      ),
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FutureBuilder<List<Menu>>(
+            future: restaurantMenu,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<Menu>? menu = snapshot.data;
+                return ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: menu!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        height: 75,
+                        color: Colors.blue,
+                        child: Center(
+                          child: Text(menu[index].category),
+                        ),
+                      );
+                    });
+              } else if (snapshot.hasError) {
+                return Text("error");
+              }
+              return const CircularProgressIndicator();
+            },
+          ),
+        ],
+      )),
     );
   }
 }
