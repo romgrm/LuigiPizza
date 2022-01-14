@@ -73,13 +73,17 @@ class _MenuScreenState extends State<MenuScreen> {
                             itemCount: menu!.length,
                             itemBuilder: (BuildContext context, int index) {
                               if (menu[index].category == "Pizza") {
-                                return Container(
-                                  height: 75,
-                                  color: Colors.green,
-                                  child: Center(
-                                    child: Text(menu[index].category),
-                                  ),
-                                );
+                                return GestureDetector(
+                                    onTap: () {
+                                      print(menu[index].name);
+                                    },
+                                    child: Container(
+                                      height: 75,
+                                      color: Colors.green,
+                                      child: Center(
+                                        child: Text(menu[index].category),
+                                      ),
+                                    ));
                               } else {
                                 return Container();
                               }
