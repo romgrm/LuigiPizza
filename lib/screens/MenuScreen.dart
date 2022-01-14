@@ -17,6 +17,8 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   Future<List<Menu>>? restaurantMenu;
 
+  var others;
+
   @override
   void initState() {
     super.initState();
@@ -29,9 +31,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
   Future<List<Menu>> _onMenuCreated() async {
     List<Menu> futureMenu = await fetchMenu(widget.restaurantInfos.id);
-    // setState(() {
-    //   restaurantMenu = futureMenu;
-    // });
+
     return futureMenu;
   }
 
@@ -42,24 +42,109 @@ class _MenuScreenState extends State<MenuScreen> {
     return Scaffold(
       backgroundColor: Colors.blue,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(widget.restaurantInfos.name),
+          Container(
+            margin: EdgeInsets.only(top: 50),
+            alignment: Alignment.topCenter,
+            color: Colors.yellow,
+            child: Text(
+              "${widget.restaurantInfos.name}'s menu",
+              style: const TextStyle(fontFamily: "title", fontSize: 50),
+            ),
+          ),
           Container(
             color: Colors.red,
             height: 600,
             child: PageView(
               controller: controller,
-              children: const [
-                Center(
-                  child: Text("first item"),
-                ),
-                Center(
-                  child: Text("second item"),
-                ),
-                Center(
-                  child: Text("third item"),
-                )
+              children: [
+                FutureBuilder<List<Menu>>(
+                    future: restaurantMenu,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        List<Menu>? menu = snapshot.data;
+
+                        return ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: menu!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (menu[index].category == "Pizza") {
+                                return Container(
+                                  height: 75,
+                                  color: Colors.green,
+                                  child: Center(
+                                    child: Text(menu[index].category),
+                                  ),
+                                );
+                              } else {
+                                return Container();
+                              }
+                            });
+                      } else if (snapshot.hasError) {
+                        return const Text("error");
+                      }
+                      return const CircularProgressIndicator();
+                    }),
+                FutureBuilder<List<Menu>>(
+                    future: restaurantMenu,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        List<Menu>? menu = snapshot.data;
+
+                        return ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: menu!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (menu[index].category == "Dryck") {
+                                return Container(
+                                  height: 75,
+                                  color: Colors.green,
+                                  child: Center(
+                                    child: Text(menu[index].category),
+                                  ),
+                                );
+                              } else {
+                                return Container();
+                              }
+                            });
+                      } else if (snapshot.hasError) {
+                        return const Text("error");
+                      }
+                      return const CircularProgressIndicator();
+                    }),
+                FutureBuilder<List<Menu>>(
+                    future: restaurantMenu,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        List<Menu>? menu = snapshot.data;
+
+                        return ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: menu!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (menu[index].category == "TillbehÃ¶r") {
+                                return Container(
+                                  height: 75,
+                                  color: Colors.green,
+                                  child: Center(
+                                    child: Text(menu[index].category),
+                                  ),
+                                );
+                              } else {
+                                return Container();
+                              }
+                            });
+                      } else if (snapshot.hasError) {
+                        return const Text("error");
+                      }
+                      return const CircularProgressIndicator();
+                    }),
               ],
             ),
           )
@@ -114,3 +199,11 @@ class _MenuScreenState extends State<MenuScreen> {
     // );
   }
 }
+/* List<Menu> pizza = [];
+                        List<Menu> others = [];
+                        menu?.map((item) => {
+                              if (item.category.contains('pizza'))
+                                {pizza = item as List<Menu>}
+                              else
+                                {others = item as List<Menu>}
+                            }); */

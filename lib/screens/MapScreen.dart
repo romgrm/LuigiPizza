@@ -26,19 +26,14 @@ class _MapScreenState extends State<MapScreen> {
       for (final restaurant in restaurantsStore) {
         final marker = Marker(
             markerId: MarkerId(restaurant.name),
-            position: LatLng(restaurant.lat, restaurant.long),
+            position: LatLng(restaurant.lat ?? 0, restaurant.long ?? 0),
             infoWindow: InfoWindow(
                 title: restaurant.name,
                 snippet: "${restaurant.street}\n${restaurant.city}",
                 //TODO: send restaurantId on push()
                 onTap: () => Navigator.pushNamed(context, router.menuScreen,
-                    arguments: Restaurant(
-                        restaurant.id,
-                        restaurant.name,
-                        restaurant.street,
-                        restaurant.city,
-                        restaurant.lat,
-                        restaurant.long))));
+                    arguments:
+                        Restaurant(id: restaurant.id, name: restaurant.name))));
         _markers[restaurant.name] = marker;
       }
     });
