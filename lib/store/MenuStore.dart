@@ -7,6 +7,7 @@ import 'package:luigi_pizza/dto/Menu.dart';
 
 Future<List<Menu>> fetchMenu(restaurantId) async {
   final int id = restaurantId;
+
   final response = await http.get(Uri.parse(
       "https://private-anon-06cb6fff8f-pizzaapp.apiary-mock.com/restaurants/$id/menu?category=Pizza&orderBy=rank"));
 

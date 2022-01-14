@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:luigi_pizza/dto/Restaurant.dart';
 import 'package:luigi_pizza/store/RestaurantStore.dart';
 import 'package:luigi_pizza/router/Router.dart' as router;
 
@@ -31,7 +32,13 @@ class _MapScreenState extends State<MapScreen> {
                 snippet: "${restaurant.street}\n${restaurant.city}",
                 //TODO: send restaurantId on push()
                 onTap: () => Navigator.pushNamed(context, router.menuScreen,
-                    arguments: restaurant.id)));
+                    arguments: Restaurant(
+                        restaurant.id,
+                        restaurant.name,
+                        restaurant.street,
+                        restaurant.city,
+                        restaurant.lat,
+                        restaurant.long))));
         _markers[restaurant.name] = marker;
       }
     });
