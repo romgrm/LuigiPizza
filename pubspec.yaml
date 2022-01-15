@@ -57,6 +57,11 @@ flutter:
   assets:
     - assets/images/chef.png
     - assets/images/cheffull.png
+    - assets/images/pizza.png
+    - assets/images/jus.png
+    - assets/images/service-alimentaire.png
+    - assets/images/tranche-de-pizza.png
+    - assets/images/chope-a-biere.png
 
   fonts:
     - family: Title
