@@ -36,7 +36,7 @@ class _CarouselMenuState extends State<CarouselMenu> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.red,
+      // color: Colors.red,
       height: 600,
       child: PageView(
         controller: controller,
@@ -59,24 +59,43 @@ class _CarouselMenuState extends State<CarouselMenu> {
                             },
                             child: Container(
                                 height: 150,
-                                color: Colors.green,
+                                // color: Colors.white,
                                 child: Row(
+                                  // mainAxisAlignment:
+                                  //     MainAxisAlignment.spaceAround,
                                   children: [
                                     Container(
                                       height: 80,
                                       padding: const EdgeInsets.only(
-                                          left: 20, right: 20),
+                                          left: 20, right: 50),
                                       // width: 50,
                                       child: Image.asset(
                                           'assets/images/pizza.png'),
                                     ),
-                                    Column(children: [
-                                      Text(menu[index].name),
-                                      if (menu.isNotEmpty)
-                                        for (var topping
-                                            in menu[index].topping!)
-                                          Text(topping)
-                                    ]),
+                                    Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Center(
+                                            child: Text(
+                                              menu[index].name,
+                                              style: const TextStyle(
+                                                  fontFamily: "SubTitle",
+                                                  fontSize: 30,
+                                                  color: Color(0xff856CD4)),
+                                            ),
+                                          ),
+                                          if (menu.isNotEmpty)
+                                            for (var topping
+                                                in menu[index].topping!)
+                                              Text(
+                                                topping,
+                                                style: const TextStyle(
+                                                    fontFamily: "TextItalic"),
+                                              )
+                                        ]),
                                   ],
                                 )));
                       } else {
