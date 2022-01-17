@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:luigi_pizza/components/carouselMenu.dart';
 import 'package:luigi_pizza/dto/Restaurant.dart';
@@ -12,6 +13,7 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  bool display = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +32,26 @@ class _MenuScreenState extends State<MenuScreen> {
               style: const TextStyle(fontFamily: "title", fontSize: 50),
             ),
           ),
-          CarouselMenu(restaurantInfos: widget.restaurantInfos),
+          CarouselMenu(
+            restaurantInfos: widget.restaurantInfos,
+            numberOfArticles: (int numberOfArticles) {
+              setState(() {
+                display = true;
+              });
+            },
+          ),
+          display
+              ? Container(
+                  // color: Colors.green,
+                  padding: EdgeInsets.only(bottom: 30, top: 20),
+                  child: CupertinoButton(
+                    color: Color(0xff856CD4),
+                    disabledColor: Colors.blue,
+                    onPressed: () => print("yo"),
+                    child: Text("Commander 1 item"),
+                  ),
+                )
+              : Container()
         ],
       ),
     );
