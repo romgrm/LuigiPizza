@@ -15,7 +15,7 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.blue,
+      // backgroundColor: Color(0xff856CD4),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
@@ -24,7 +24,7 @@ class _MenuScreenState extends State<MenuScreen> {
           Container(
             margin: EdgeInsets.only(top: 50),
             alignment: Alignment.topCenter,
-            color: Colors.yellow,
+            // color: Colors.yellow,
             child: Text(
               "${widget.restaurantInfos.name}'s menu",
               style: const TextStyle(fontFamily: "title", fontSize: 50),

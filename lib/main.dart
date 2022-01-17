@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'router/Router.dart' as router;
 
 void main() {
@@ -12,12 +13,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: "Luigi's Pizza"),
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: ResponsiveSizer(
+          builder: (context, orientation, screenType) {
+            return const MyHomePage(title: "Luigi's Pizza");
+          },
+        ));
   }
 }
 
