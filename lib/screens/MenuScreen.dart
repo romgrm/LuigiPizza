@@ -14,6 +14,7 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   bool display = false;
+  List articlesStore = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,9 +38,10 @@ class _MenuScreenState extends State<MenuScreen> {
             children: [
               CarouselMenu(
                 restaurantInfos: widget.restaurantInfos,
-                numberOfArticles: (int numberOfArticles) {
+                articlesSelected: (List articlesSelected) {
                   setState(() {
                     display = true;
+                    articlesStore = articlesSelected;
                   });
                 },
               ),
@@ -48,13 +50,27 @@ class _MenuScreenState extends State<MenuScreen> {
                       alignment: Alignment.bottomCenter,
                       child: Container(
                         // color: Colors.green,
-                        padding: EdgeInsets.only(bottom: 30, top: 20),
+                        padding: const EdgeInsets.only(bottom: 30, top: 20),
                         child: CupertinoButton(
                           // color: Color(0xff856CD4),
-                          color: Colors.blue,
-                          disabledColor: Colors.blue,
-                          onPressed: () => print("yo"),
-                          child: Text("Afficher mon panier"),
+                          color: Color(0xff352B54),
+                          disabledColor: Color(0xff352B54),
+                          onPressed: () => {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext builder) => Container(
+                                      height: 500,
+                                      color: Colors.red,
+                                      child: Column(
+                                        children: [
+                                          for (var article in articlesStore)
+                                            Text(article)
+                                        ],
+                                      ),
+                                    ))
+                          },
+                          child: Text(
+                              "Afficher mon panier (${articlesStore.length})"),
                         ),
                       ),
                     )

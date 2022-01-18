@@ -6,14 +6,14 @@ import 'package:luigi_pizza/dto/Restaurant.dart';
 import 'package:luigi_pizza/store/MenuStore.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-typedef IntCallback = Function(int numberOfArticles);
+typedef IntCallback = Function(List articles);
 
 class CarouselMenu extends StatefulWidget {
   final Restaurant restaurantInfos;
-  final IntCallback numberOfArticles;
+  final IntCallback articlesSelected;
 
   const CarouselMenu(
-      {Key? key, required this.restaurantInfos, required this.numberOfArticles})
+      {Key? key, required this.restaurantInfos, required this.articlesSelected})
       : super(key: key);
 
   @override
@@ -23,7 +23,7 @@ class CarouselMenu extends StatefulWidget {
 class _CarouselMenuState extends State<CarouselMenu> {
   final PageController controller = PageController();
   Future<List<Menu>>? restaurantMenu;
-  var articleStore = 0;
+  var articlesSelected = [];
 
   @override
   void initState() {
@@ -75,9 +75,8 @@ class _CarouselMenuState extends State<CarouselMenu> {
                                   left: 10, right: 10, bottom: 20),
                               child: InkWell(
                                   onTap: () {
-                                    debugPrint(menu[index].name);
-                                    articleStore += 1;
-                                    widget.numberOfArticles(articleStore);
+                                    articlesSelected.add(menu[index].name);
+                                    widget.articlesSelected(articlesSelected);
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -133,7 +132,16 @@ class _CarouselMenuState extends State<CarouselMenu> {
                   } else if (snapshot.hasError) {
                     return const Text("error");
                   }
-                  return const CircularProgressIndicator();
+                  return const Center(
+                    child: SizedBox(
+                      height: 50,
+                      width: 50,
+                      // color: Colors.red,
+                      child: CircularProgressIndicator(
+                        color: Color(0xff352b54),
+                      ),
+                    ),
+                  );
                 }),
             FutureBuilder<List<Menu>>(
                 future: restaurantMenu,
@@ -161,7 +169,11 @@ class _CarouselMenuState extends State<CarouselMenu> {
                   } else if (snapshot.hasError) {
                     return const Text("error");
                   }
-                  return const CircularProgressIndicator();
+                  return const SizedBox(
+                    height: 10,
+                    width: 10,
+                    child: CircularProgressIndicator(),
+                  );
                 }),
             FutureBuilder<List<Menu>>(
                 future: restaurantMenu,
@@ -189,7 +201,11 @@ class _CarouselMenuState extends State<CarouselMenu> {
                   } else if (snapshot.hasError) {
                     return const Text("error");
                   }
-                  return const CircularProgressIndicator();
+                  return const SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: CircularProgressIndicator(),
+                  );
                 }),
           ],
         ),
