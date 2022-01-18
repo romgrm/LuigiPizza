@@ -32,82 +32,37 @@ class _MenuScreenState extends State<MenuScreen> {
               style: const TextStyle(fontFamily: "title", fontSize: 50),
             ),
           ),
-          CarouselMenu(
-            restaurantInfos: widget.restaurantInfos,
-            numberOfArticles: (int numberOfArticles) {
-              setState(() {
-                display = true;
-              });
-            },
-          ),
-          display
-              ? Container(
-                  // color: Colors.green,
-                  padding: EdgeInsets.only(bottom: 30, top: 20),
-                  child: CupertinoButton(
-                    color: Color(0xff856CD4),
-                    disabledColor: Colors.blue,
-                    onPressed: () => print("yo"),
-                    child: Text("Commander 1 item"),
-                  ),
-                )
-              : Container()
+          Expanded(
+              child: Stack(
+            children: [
+              CarouselMenu(
+                restaurantInfos: widget.restaurantInfos,
+                numberOfArticles: (int numberOfArticles) {
+                  setState(() {
+                    display = true;
+                  });
+                },
+              ),
+              display
+                  ? Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        // color: Colors.green,
+                        padding: EdgeInsets.only(bottom: 30, top: 20),
+                        child: CupertinoButton(
+                          // color: Color(0xff856CD4),
+                          color: Colors.blue,
+                          disabledColor: Colors.blue,
+                          onPressed: () => print("yo"),
+                          child: Text("Afficher mon panier"),
+                        ),
+                      ),
+                    )
+                  : Container()
+            ],
+          ))
         ],
       ),
     );
-    // return PageView(
-    //   controller: controller,
-    //   children: const [
-    //     Center(
-    //       child: Text("first item"),
-    //     ),
-    //     Center(
-    //       child: Text("second item"),
-    //     ),
-    //     Center(
-    //       child: Text("third item"),
-    //     )
-    //   ],
-    // );
-    // // return Scaffold(
-    //   body: Center(
-    //       child: Column(
-    //     mainAxisAlignment: MainAxisAlignment.center,
-    //     children: [
-    //       FutureBuilder<List<Menu>>(
-    //         future: restaurantMenu,
-    //         builder: (context, snapshot) {
-    //           if (snapshot.hasData) {
-    //             List<Menu>? menu = snapshot.data;
-    //             return ListView.builder(
-    //                 scrollDirection: Axis.vertical,
-    //                 shrinkWrap: true,
-    //                 itemCount: menu!.length,
-    //                 itemBuilder: (BuildContext context, int index) {
-    //                   return Container(
-    //                     height: 75,
-    //                     color: Colors.blue,
-    //                     child: Center(
-    //                       child: Text(menu[index].category),
-    //                     ),
-    //                   );
-    //                 });
-    //           } else if (snapshot.hasError) {
-    //             return Text("error");
-    //           }
-    //           return const CircularProgressIndicator();
-    //         },
-    //       ),
-    //     ],
-    //   )),
-    // );
   }
 }
-/* List<Menu> pizza = [];
-                        List<Menu> others = [];
-                        menu?.map((item) => {
-                              if (item.category.contains('pizza'))
-                                {pizza = item as List<Menu>}
-                              else
-                                {others = item as List<Menu>}
-                            }); */
