@@ -59,16 +59,39 @@ class _MenuScreenState extends State<MenuScreen> {
                           onPressed: () => {
                             showModalBottomSheet(
                                 context: context,
-                                builder: (BuildContext builder) => ListView(
-                                      shrinkWrap: true,
-                                      children: ListTile.divideTiles(
-                                          context: context,
-                                          tiles: [
-                                            for (var article in articlesStore)
-                                              ListTile(
-                                                title: Text(article),
-                                              )
-                                          ]).toList(),
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20))),
+                                builder: (BuildContext builder) =>
+                                    ListView.separated(
+                                      itemCount: articlesStore.length,
+                                      itemBuilder: (context, index) {
+                                        // for (var article in articlesStore)
+                                        return ListTile(
+                                          leading: Image.asset(
+                                            'assets/images/pizza.png',
+                                          ),
+                                          title: Text(articlesStore[index]),
+                                          trailing: GestureDetector(
+                                            child: Icon(Icons.delete_outline),
+                                            onTap: () {
+                                              setState(() {
+                                                articlesStore.removeAt(index);
+                                              });
+                                            },
+                                          ),
+                                          contentPadding: EdgeInsets.all(20),
+                                          onTap: () {
+                                            print(index);
+                                          },
+                                        );
+
+                                        // return SizedBox.shrink();
+                                      },
+                                      separatorBuilder: (context, index) {
+                                        return Divider();
+                                      },
                                     ))
                           },
                           child: Text(
@@ -84,3 +107,33 @@ class _MenuScreenState extends State<MenuScreen> {
     );
   }
 }
+
+//  ListView.builder(
+//                                 shrinkWrap: true,
+//                                 itemCount: 1,
+//                                 itemBuilder: (context, index) {
+//                                   return ListView(
+//                                     shrinkWrap: true,
+//                                     children: ListTile
+//                                         .divideTiles(context: context, tiles: [
+//                                       for (var article in articlesStore)
+//                                         ListTile(
+//                                           leading: Image.asset(
+//                                             'assets/images/pizza.png',
+//                                           ),
+//                                           title: Text(article),
+//                                           trailing: GestureDetector(
+//                                             child: Icon(Icons.delete_outline),
+//                                             onTap: () {
+//                                               print(index);
+//                                             },
+//                                           ),
+//                                           contentPadding: EdgeInsets.all(20),
+//                                           onTap: () {
+//                                             print(articlesStore[index]);
+//                                           },
+//                                         )
+//                                     ]).toList(),
+//                                   );
+//                                 },
+//                               ),
