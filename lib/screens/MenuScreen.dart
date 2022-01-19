@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:luigi_pizza/components/carouselMenu.dart';
 import 'package:luigi_pizza/dto/Restaurant.dart';
 
@@ -58,15 +59,16 @@ class _MenuScreenState extends State<MenuScreen> {
                           onPressed: () => {
                             showModalBottomSheet(
                                 context: context,
-                                builder: (BuildContext builder) => Container(
-                                      height: 500,
-                                      color: Colors.red,
-                                      child: Column(
-                                        children: [
-                                          for (var article in articlesStore)
-                                            Text(article)
-                                        ],
-                                      ),
+                                builder: (BuildContext builder) => ListView(
+                                      shrinkWrap: true,
+                                      children: ListTile.divideTiles(
+                                          context: context,
+                                          tiles: [
+                                            for (var article in articlesStore)
+                                              ListTile(
+                                                title: Text(article),
+                                              )
+                                          ]).toList(),
                                     ))
                           },
                           child: Text(
