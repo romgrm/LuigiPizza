@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:luigi_pizza/components/carouselMenu.dart';
 import 'package:luigi_pizza/dto/Restaurant.dart';
+import 'package:luigi_pizza/providers/ArticlesStore.dart';
+import 'package:provider/provider.dart';
 
 class MenuScreen extends StatefulWidget {
   final Restaurant restaurantInfos;
 
-  const MenuScreen({Key? key, required this.restaurantInfos}) : super(key: key);
+  MenuScreen({Key? key, required this.restaurantInfos}) : super(key: key);
 
   @override
   _MenuScreenState createState() => _MenuScreenState();
@@ -15,9 +17,19 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   bool display = false;
-  List articlesStore = [];
+  // List articlesStore = [];
+
+  // void _removeItemFromStore(int index) {
+  //   setState(() {
+  //     articlesStore.removeAt(index);
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
+    ArticlesStore dataStore =
+        Provider.of<ArticlesStore>(context, listen: false);
+
     return Scaffold(
       // backgroundColor: Color(0xff856CD4),
       body: Column(
@@ -31,7 +43,7 @@ class _MenuScreenState extends State<MenuScreen> {
             // color: Colors.yellow,
             child: Text(
               "${widget.restaurantInfos.name}'s menu",
-              style: const TextStyle(fontFamily: "title", fontSize: 50),
+              style: TextStyle(fontFamily: "title", fontSize: 50),
             ),
           ),
           Expanded(
@@ -40,63 +52,75 @@ class _MenuScreenState extends State<MenuScreen> {
               CarouselMenu(
                 restaurantInfos: widget.restaurantInfos,
                 articlesSelected: (List articlesSelected) {
+                  // setState(() {
+                  //   display = true;
+                  //   articlesStore = articlesSelected;
+                  // });
                   setState(() {
                     display = true;
-                    articlesStore = articlesSelected;
                   });
+
+                  dataStore.addItem(articlesSelected);
                 },
               ),
               display
                   ? Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
-                        // color: Colors.green,
-                        padding: const EdgeInsets.only(bottom: 30, top: 20),
+                        padding: EdgeInsets.only(bottom: 30, top: 20),
                         child: CupertinoButton(
-                          // color: Color(0xff856CD4),
-                          color: Color(0xff352B54),
-                          disabledColor: Color(0xff352B54),
-                          onPressed: () => {
-                            showModalBottomSheet(
-                                context: context,
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(20),
-                                        topRight: Radius.circular(20))),
-                                builder: (BuildContext builder) =>
-                                    ListView.separated(
-                                      itemCount: articlesStore.length,
-                                      itemBuilder: (context, index) {
-                                        // for (var article in articlesStore)
-                                        return ListTile(
-                                          leading: Image.asset(
-                                            'assets/images/pizza.png',
-                                          ),
-                                          title: Text(articlesStore[index]),
-                                          trailing: GestureDetector(
-                                            child: Icon(Icons.delete_outline),
-                                            onTap: () {
-                                              setState(() {
-                                                articlesStore.removeAt(index);
-                                              });
-                                            },
-                                          ),
-                                          contentPadding: EdgeInsets.all(20),
-                                          onTap: () {
-                                            print(index);
+                            color: Color(0xff352B54),
+                            disabledColor: Color(0xff352B54),
+                            onPressed: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20))),
+                                  builder: (BuildContext builder) =>
+                                      Consumer<ArticlesStore>(builder:
+                                          (context, articleStore, child) {
+                                        return ListView.separated(
+                                          itemCount: articleStore.store.length,
+                                          itemBuilder: (context, index) {
+                                            return ListTile(
+                                              leading: Image.asset(
+                                                'assets/images/pizza.png',
+                                              ),
+                                              title: Text(
+                                                  articleStore.store[index]),
+                                              trailing: GestureDetector(
+                                                child:
+                                                    Icon(Icons.delete_outline),
+                                                onTap: () {
+                                                  //  _removeItemFromStore(
+                                                  //     index);
+                                                  // Provider.of<ArticlesStore>(
+                                                  //         context,
+                                                  //         listen: false)
+                                                  //     .removeItem(index);
+                                                  dataStore.removeItem(index);
+                                                },
+                                              ),
+                                              contentPadding:
+                                                  EdgeInsets.all(20),
+                                              onTap: () {
+                                                print(index);
+                                              },
+                                            );
+                                          },
+                                          separatorBuilder: (context, index) {
+                                            return Divider();
                                           },
                                         );
-
-                                        // return SizedBox.shrink();
-                                      },
-                                      separatorBuilder: (context, index) {
-                                        return Divider();
-                                      },
-                                    ))
-                          },
-                          child: Text(
-                              "Afficher mon panier (${articlesStore.length})"),
-                        ),
+                                      }));
+                            },
+                            child: Consumer<ArticlesStore>(
+                                builder: (context, articleStore, child) {
+                              return Text(
+                                  "Afficher mon panier (${articleStore.store.length})");
+                            })),
                       ),
                     )
                   : Container()
