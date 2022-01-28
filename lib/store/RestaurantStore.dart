@@ -3,8 +3,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:luigi_pizza/dto/Menu.dart';
-import 'package:luigi_pizza/dto/Restaurant.dart';
+import '../dto/Menu.dart';
+import '../dto/Restaurant.dart';
 
 Future<List<Restaurant>> fetchRestaurant() async {
   final response = await http.get(Uri.parse(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:luigi_pizza/dto/Restaurant.dart';
-import 'package:luigi_pizza/store/RestaurantStore.dart';
-import 'package:luigi_pizza/router/Router.dart' as router;
+import '../dto/Restaurant.dart';
+import '../store/RestaurantStore.dart';
+import '../router/Router.dart' as router;
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);

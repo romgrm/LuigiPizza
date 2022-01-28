@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:luigi_pizza/router/Router.dart' as router;
+import '../router/Router.dart' as router;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

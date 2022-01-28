@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:luigi_pizza/dto/Restaurant.dart';
-import 'package:luigi_pizza/screens/HomeScreen.dart';
-import 'package:luigi_pizza/screens/MapScreen.dart';
-import 'package:luigi_pizza/screens/MenuScreen.dart';
+import '../dto/Restaurant.dart';
+import '../screens/HomeScreen.dart';
+import '../screens/MapScreen.dart';
+import '../screens/MenuScreen.dart';
 
 const homeScreen = 'home';
 const mapScreen = 'map';

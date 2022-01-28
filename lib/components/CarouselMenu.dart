@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:luigi_pizza/dto/Menu.dart';
-import 'package:luigi_pizza/dto/Restaurant.dart';
-import 'package:luigi_pizza/store/MenuStore.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
+import '../dto/Menu.dart';
+import '../dto/Restaurant.dart';
+import '../store/MenuStore.dart';
 
 typedef IntCallback = Function(List articles);
 

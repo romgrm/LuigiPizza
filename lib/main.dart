@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:luigi_pizza/providers/ArticlesStore.dart';
+import 'providers/ArticlesStore.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'router/Router.dart' as router;
 import 'package:provider/provider.dart';

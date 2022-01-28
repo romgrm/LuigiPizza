@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:luigi_pizza/components/carouselMenu.dart';
-import 'package:luigi_pizza/dto/Restaurant.dart';
-import 'package:luigi_pizza/providers/ArticlesStore.dart';
+import '../components/carouselMenu.dart';
+import '../dto/Restaurant.dart';
+import '../providers/ArticlesStore.dart';
 import 'package:provider/provider.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -43,11 +43,11 @@ class _MenuScreenState extends State<MenuScreen> {
               CarouselMenu(
                 restaurantInfos: widget.restaurantInfos,
                 articlesSelected: (List articlesSelected) {
+                  // Set store's ArticleStore with Carousel Child, without change UI's Carousel
                   setState(() {
                     display = true;
+                    dataStore.addItem(articlesSelected);
                   });
-                  // Set store's ArticleStore with Carousel Child, without change UI's Carousel
-                  dataStore.addItem(articlesSelected);
                 },
               ),
               display
@@ -85,6 +85,14 @@ class _MenuScreenState extends State<MenuScreen> {
                                                   onTap: () {
                                                     articleStore
                                                         .removeItem(index);
+                                                    if (articleStore
+                                                        .store.isEmpty) {
+                                                      setState(() {
+                                                        display = false;
+                                                      });
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    }
                                                   },
                                                 ),
                                                 contentPadding:

@@ -3,7 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:luigi_pizza/dto/Menu.dart';
+import '../dto/Menu.dart';
 
 Future<List<Menu>> fetchMenu(restaurantId) async {
   final int id = restaurantId;
