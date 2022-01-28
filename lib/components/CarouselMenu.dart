@@ -92,14 +92,12 @@ class _CarouselMenuState extends State<CarouselMenu> {
                                             child: Image.asset(
                                                 'assets/images/pizza.png'),
                                           ),
-                                          Container(
-                                            child: Text(
-                                              menu[index].name,
-                                              style: const TextStyle(
-                                                  fontFamily: "SubTitle",
-                                                  fontSize: 30,
-                                                  color: Color(0xff856CD4)),
-                                            ),
+                                          Text(
+                                            menu[index].name,
+                                            style: const TextStyle(
+                                                fontFamily: "SubTitle",
+                                                fontSize: 30,
+                                                color: Color(0xff856CD4)),
                                           ),
                                           Row(
                                             children: [
@@ -154,15 +152,63 @@ class _CarouselMenuState extends State<CarouselMenu> {
                         itemCount: menu!.length,
                         itemBuilder: (BuildContext context, int index) {
                           if (menu[index].category == "Dryck") {
-                            return Container(
-                              height: 75,
-                              color: Colors.green,
-                              child: Center(
-                                child: Text(menu[index].category),
-                              ),
-                            );
+                            return Card(
+                                color: Colors.white,
+                                shadowColor: Colors.black,
+                                elevation: 5,
+                                margin: const EdgeInsets.only(
+                                    left: 10, right: 10, bottom: 20),
+                                child: InkWell(
+                                    onTap: () {
+                                      articlesSelected.add(menu[index].name);
+                                      widget.articlesSelected(articlesSelected);
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Container(
+                                              height: 10.h,
+                                              margin: const EdgeInsets.only(
+                                                  top: 20, bottom: 10),
+                                              // color: Colors.green,
+                                              child: Image.asset(
+                                                  'assets/images/jus.png'),
+                                            ),
+                                            Text(
+                                              menu[index].name,
+                                              style: const TextStyle(
+                                                  fontFamily: "SubTitle",
+                                                  fontSize: 30,
+                                                  color: Color(0xff856CD4)),
+                                            ),
+                                            Row(
+                                              children: [
+                                                for (var topping
+                                                    in menu[index].topping!)
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 20),
+                                                    child: Text(
+                                                      "${topping}, ",
+                                                      style: const TextStyle(
+                                                          fontFamily:
+                                                              "TextItalic"),
+                                                    ),
+                                                  )
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    )));
                           } else {
-                            return Container();
+                            return const SizedBox.shrink();
                           }
                         });
                   } else if (snapshot.hasError) {
@@ -186,15 +232,63 @@ class _CarouselMenuState extends State<CarouselMenu> {
                         itemCount: menu!.length,
                         itemBuilder: (BuildContext context, int index) {
                           if (menu[index].category == "TillbehÃ¶r") {
-                            return Container(
-                              height: 75,
-                              color: Colors.green,
-                              child: Center(
-                                child: Text(menu[index].category),
-                              ),
-                            );
+                            return Card(
+                                color: Colors.white,
+                                shadowColor: Colors.black,
+                                elevation: 5,
+                                margin: const EdgeInsets.only(
+                                    left: 10, right: 10, bottom: 20),
+                                child: InkWell(
+                                    onTap: () {
+                                      articlesSelected.add(menu[index].name);
+                                      widget.articlesSelected(articlesSelected);
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Container(
+                                              height: 10.h,
+                                              margin: const EdgeInsets.only(
+                                                  top: 20, bottom: 10),
+                                              // color: Colors.green,
+                                              child: Image.asset(
+                                                  'assets/images/baton-de-glace.png'),
+                                            ),
+                                            Text(
+                                              menu[index].name,
+                                              style: const TextStyle(
+                                                  fontFamily: "SubTitle",
+                                                  fontSize: 30,
+                                                  color: Color(0xff856CD4)),
+                                            ),
+                                            Row(
+                                              children: [
+                                                for (var topping
+                                                    in menu[index].topping!)
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 20),
+                                                    child: Text(
+                                                      "${topping}, ",
+                                                      style: const TextStyle(
+                                                          fontFamily:
+                                                              "TextItalic"),
+                                                    ),
+                                                  )
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    )));
                           } else {
-                            return Container();
+                            return const SizedBox.shrink();
                           }
                         });
                   } else if (snapshot.hasError) {

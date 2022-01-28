@@ -64,7 +64,7 @@ flutter:
     - assets/images/service-alimentaire.png
     - assets/images/tranche-de-pizza.png
     - assets/images/chope-a-biere.png
-
+    - assets/images/baton-de-glace.png 
   fonts:
     - family: Title
       fonts:
